@@ -1,0 +1,56 @@
+<project name="RapidMiner diffbot" default="install">
+	<description>Build file for the RapidMiner Diffbot extension</description>
+	
+	<presetdef name="javac">
+	    <javac includeantruntime="false" />
+	  </presetdef>
+	
+	<property name="rm.dir" location="../RM_61" />
+
+	<property name="build.build" location="build" />
+	<property name="build.resources" location="resources" />
+	<property name="build.lib" location="lib" />
+
+	<property name="check.sources" location = "src" />
+	
+	<property name="javadoc.targetDir" location="javadoc" />
+
+	<property name="extension.name" value="Diffbot (beta)" />
+	<property name="extension.name.long" value="Diffbot RapidMiner (beta) Extension" />
+	<property name="extension.namespace" value="com.diffbot" />
+    <property name="extension.vendor" value="Diffbot Corp." />
+    <property name="extension.admin" value="" />
+    <property name="extension.url" value="" />
+
+
+	<property name="extension.needsVersion" value="6.1" />
+	<property name="extension.dependencies" value="rmx_text[6.1];rmx_cloud_connectivity[6.1]" />
+		
+	<!-- Uncomment if the extension actually depends on other extensions -->
+	<!-- property name="build.dependentExtensions" value="true" /> -->
+
+	<property name="extension.initClass" value="com.diffbot.rapidminer.PluginInitDiffbot" />
+	<property name="extension.objectDefinition" value="/com/diffbot/rapidminer/resources/ioobjectsDiffbot.xml" />
+	<property name="extension.operatorDefinition" value="/com/diffbot/rapidminer/resources/OperatorsDiffbot.xml" />
+	<property name="extension.parseRuleDefinition" value="/com/diffbot/rapidminer/resources/parserulesDiffbot.xml" />
+	<property name="extension.groupProperties" value="/com/diffbot/rapidminer/resources/groupsDiffbot.properties" />
+	<property name="extension.errorDescription" value="/com/diffbot/rapidminer/resources/i18n/ErrorsDiffbot.properties" />
+	<property name="extension.userErrors" value="/com/diffbot/rapidminer/resources/i18n/UserErrorMessagesDiffbot.properties" />
+	<property name="extension.guiDescription" value="/com/diffbot/rapidminer/resources/i18n/GUIDiffbot.properties" />
+
+
+	<!-- Src files -->
+	<path id="build.sources.path">
+		<dirset dir="src">
+			<include name="**" />
+		</dirset>
+	</path>
+	<fileset dir="src" id="build.sources">
+		<include name="**/*.java" />
+	</fileset>
+	<fileset id="build.dependentExtensions" dir="..">
+		<exclude name="**/*"/>
+	</fileset>
+
+	<import file="${rm.dir}/build_extension.xml" />
+</project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<operators name="diffbot" version="5.0" docbundle="com/diffbot/rapidminer/resources/i18n/OperatorsDocDiffbot">
+   <group key="text_processing">
+      <group key="diffbot">
+         <icon>diffbot.png</icon>
+         <operator>
+            <key>diffbot_article</key>
+            <class>com.diffbot.rapidminer.article.operator.DiffbotArticleOperator</class>
+            <icon>diffbot_article.png</icon>
+         </operator>
+         <operator>
+            <key>diffbot_analyze</key>
+            <class>com.diffbot.rapidminer.analyze.operator.DiffbotAnalyzeOperator</class>
+            <!-- icon>diffbot_analyze.png</icon-->
+         </operator>
+      </group>
+   </group>
+</operators>

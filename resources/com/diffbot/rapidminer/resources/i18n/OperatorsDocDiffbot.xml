@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<operatorHelp lang="en_EN">
+    <!--  This is an example how to specify the description of operators and the translation of it's key identifier
+    to names. 
+
+   <operator>
+      <name>SingleTextInput</name>
+      <synopsis>Generates word vectors from a single text.</synopsis>
+      <help />
+   </operator>
+   <operator>
+      <name>TextObjectWriter</name>
+      <synopsis>Writes a textobject into a file.</synopsis>
+      <help>This operator writes a given textObject into a file. It might be specified if an existing file with the same name should be overwritten.</help>
+   </operator>
+
+    This is how group ids are translated:
+    
+   <group>
+      <key>text_processing</key>
+      <name>Text Processing</name>
+   </group>
+
+    -->
+	<group>
+		<key>text_processing.diffbot</key>
+		<name>Diffbot</name>
+	</group>
+	<operator>
+		<key>diffbot_analyze</key>
+		<name>Diffbot Analyze</name>
+		<!-- shortName>Analyze</shortName-->
+		<synopsis>Calls the Diffbot analyze API and extracts information from a page on the web. A valid token to use this node is required.</synopsis>
+		<help>&lt;p&gt;The Analyze API is used to visually analyze a web page, identify its "page-type," and determine which Diffbot extraction API (if any) is appropriate. Pages that match a supported extraction API -- articles, discussions, images, products or videos -- &lt;b&gt;will be automatically extracted&lt;/b&gt; and returned in the Analyze API response.&lt;br/&gt;Pages not currently supported by an extraction API will return "other."&lt;/p&gt;
+		&lt;p&gt;It looks for an attribute in the input table with role: &quot;location&quot;, which should contain URLs for articles (this case the result is a collection of documents). If that is not found, you should specify the url parameter (which case the result is a single document).&lt;/p&gt;
+		&lt;p&gt;The optional fields can be specified according to the &lt;a href=&quot;https://www.diffbot.com/dev/docs/analyze/&quot;&gt;fields&lt;/a&gt; of each API in expert mode.&lt;/p&gt;
+		&lt;p&gt;For details check &lt;a href=&quot;https://www.diffbot.com/dev/docs/analyze/&quot;&gt;Diffbot Analyze documentation&lt;/a&gt;.&lt;/p&gt;
+		</help>
+	</operator>
+	<operator>
+		<key>diffbot_article</key>
+		<name>Diffbot Article</name>
+		<shortName>Article</shortName>
+		<synopsis>Calls the Diffbot article API and extracts information from article on the web. A valid token to use this node is required.</synopsis>
+		<help>&lt;p&gt;The Article API is used to extract clean article text and other data from news articles, blog posts and other text-heavy pages. Retrieve the full-text, cleaned and normalized HTML, related images and videos, author, date, tags—automatically, from any article on any site.&lt;/p&gt;
+		&lt;p&gt;It looks for an attribute in the input table with role: &quot;location&quot;, which should contain URLs for articles (this case the result is a collection of documents). If that is not found, you should specify the url parameter (which case the result is a single document).&lt;/p&gt;
+		&lt;p&gt;The optional fields can be selected with from the existing combinations or can also be created by clicking on the icon beside it. If the combination is not working well, custom &lt;a href=&quot;https://www.diffbot.com/dev/docs/article/#fields&quot;&gt;fields&lt;/a&gt; value can be specified in expert mode.&lt;/p&gt;
+		&lt;p&gt;For details check &lt;a href=&quot;https://www.diffbot.com/dev/docs/article/&quot;&gt;diffbot article documentation&lt;/a&gt;.&lt;/p&gt;
+		</help>
+	</operator>
+
+</operatorHelp>
