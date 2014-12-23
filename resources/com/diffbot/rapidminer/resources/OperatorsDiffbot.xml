@@ -11,7 +11,7 @@
          <operator>
             <key>diffbot_analyze</key>
             <class>com.diffbot.rapidminer.analyze.operator.DiffbotAnalyzeOperator</class>
-            <!-- icon>diffbot_analyze.png</icon-->
+            <icon>diffbot_analyze.png</icon>
          </operator>
       </group>
    </group>
