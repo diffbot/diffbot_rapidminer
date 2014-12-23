@@ -20,7 +20,7 @@
 	<property name="extension.namespace" value="com.diffbot" />
     <property name="extension.vendor" value="Diffbot Corp." />
     <property name="extension.admin" value="" />
-    <property name="extension.url" value="" />
+    <property name="extension.url" value="https://github.com/aborg0/diffbot_rapidminer" />
 
 
 	<property name="extension.needsVersion" value="6.1" />
