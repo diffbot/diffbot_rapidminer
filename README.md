@@ -1,7 +1,7 @@
 RapidMiner Diffbot Extension
 ============================
 
-A Diffbot client for RapidMiner 6.1 or above to analyze web pages. 
+A Diffbot client for RapidMiner 6.1 or above to analyze web pages. It supports the following Diffbot automatic APIs: [analyse](https://www.diffbot.com/dev/docs/analyze/) and [article](https://www.diffbot.com/dev/docs/article/) (experimental support).
 
 ###Prerequisites
 RapidMiner Studio 6.1 with Text Processing. The [Starter](https://rapidminer.com/pricing/) license is sufficient.
