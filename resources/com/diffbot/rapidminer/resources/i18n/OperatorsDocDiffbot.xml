@@ -28,8 +28,8 @@
 	</group>
 	<operator>
 		<key>diffbot_analyze</key>
-		<name>Diffbot Analyze</name>
-		<!-- shortName>Analyze</shortName-->
+		<name>Analyze Webpage (Diffbot)</name>
+		<shortName>Analyze Webpage</shortName>
 		<synopsis>Calls the Diffbot analyze API and extracts information from a page on the web. A valid token to use this node is required.</synopsis>
 		<help>&lt;p&gt;The Analyze API is used to visually analyze a web page, identify its "page-type," and determine which Diffbot extraction API (if any) is appropriate. Pages that match a supported extraction API -- articles, discussions, images, products or videos -- &lt;b&gt;will be automatically extracted&lt;/b&gt; and returned in the Analyze API response.&lt;br/&gt;Pages not currently supported by an extraction API will return "other."&lt;/p&gt;
 		&lt;p&gt;It looks for an attribute in the input table with role: &quot;location&quot;, which should contain URLs for articles (this case the result is a collection of documents). If that is not found, you should specify the url parameter (which case the result is a single document).&lt;/p&gt;
@@ -39,8 +39,8 @@
 	</operator>
 	<operator>
 		<key>diffbot_article</key>
-		<name>Diffbot Article</name>
-		<shortName>Article</shortName>
+		<name>Parse Article (Diffbot)</name>
+		<shortName>Parse Article</shortName>
 		<synopsis>Calls the Diffbot article API and extracts information from article on the web. A valid token to use this node is required.</synopsis>
 		<help>&lt;p&gt;The Article API is used to extract clean article text and other data from news articles, blog posts and other text-heavy pages. Retrieve the full-text, cleaned and normalized HTML, related images and videos, author, date, tags—automatically, from any article on any site.&lt;/p&gt;
 		&lt;p&gt;It looks for an attribute in the input table with role: &quot;location&quot;, which should contain URLs for articles (this case the result is a collection of documents). If that is not found, you should specify the url parameter (which case the result is a single document).&lt;/p&gt;
