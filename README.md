@@ -12,7 +12,7 @@ RapidMiner Studio 6.1 with Text Processing. The [Starter](https://rapidminer.com
 2. Use the [token you got](http://www.diffbot.com/pricing/) from [Diffbot](http://www.diffbot.com/) to analyze web pages using the operators available under `Text Processing/Diffbot`. The results are presented as JSON documents. You might prefer to use the `JSON To Data` operator to extract information in tabular form.
 
 ### Development getting started
-1. Checkout [RapidMiner](https://github.com/rapidminer/rapidminer) (e.g. to _~/git/rapidminer_).
+1. Checkout [RapidMiner](https://github.com/rapidminer/rapidminer) (e.g. to _~/git/rapidminer_; https://github.com/aborg0/rapidminer/tree/extension_java7 is the preferred branch).
 
 2. Install [RapidMiner Studio 6.1](https://rapidminer.com/products/studio/) (e.g. to _~/rapidminer-studio_).
 
