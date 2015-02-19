@@ -246,7 +246,7 @@ public class DiffbotAnalyzeOperator extends Operator {
 				ACCEPT_LANGUAGE, "Accept-Language header used by Diffbot",
 				true, true);
 		ParameterTypeAttribute location = new ParameterTypeAttribute(
-				LOCATION, "Web page locations", urlInputPort);
+				LOCATION, "Web page locations", urlInputPort, true, false);
 		final PortProvider pp = new PortProvider() {
 			@Override
 			public Port getPort() {

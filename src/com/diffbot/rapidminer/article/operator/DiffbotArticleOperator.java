@@ -287,7 +287,7 @@ public class DiffbotArticleOperator extends Operator {
 						this, CUSTOM_FIELDS, true, true));
 		fields.registerDependencyCondition(new BooleanParameterCondition(this,
 				CUSTOM_FIELDS, true, false));
-		ParameterTypeAttribute location = new ParameterTypeAttribute(LOCATION, "Article locations", urlInputPort);
+		ParameterTypeAttribute location = new ParameterTypeAttribute(LOCATION, "Article locations", urlInputPort, true, false);
 		PortProvider pp = new PortProvider() {
 			@Override
 			public Port getPort() {
