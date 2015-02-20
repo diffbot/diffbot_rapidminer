@@ -255,7 +255,7 @@ public class DiffbotArticleOperator extends Operator {
 	public List<ParameterType> getParameterTypes() {
 		ParameterTypeString token = new ParameterTypeString(TOKEN, "Token",
 				false, false);
-		ParameterTypeString url = new ParameterTypeString(URL, "URL", false,
+		ParameterTypeString url = new ParameterTypeString(URL, "URL", true,
 				false);
 		ParameterTypeBoolean paging = new ParameterTypeBoolean(
 				PAGING,

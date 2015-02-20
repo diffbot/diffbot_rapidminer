@@ -221,7 +221,7 @@ public class DiffbotAnalyzeOperator extends Operator {
 	public List<ParameterType> getParameterTypes() {
 		ParameterTypeString token = new ParameterTypeString(TOKEN, "Token",
 				false, false);
-		ParameterTypeString url = new ParameterTypeString(URL, "URL", false,
+		ParameterTypeString url = new ParameterTypeString(URL, "URL", true,
 				false);
 		ParameterTypeInt version = new ParameterTypeInt(VERSION,
 				"Diffbot version", 2, 11, 3, true);
