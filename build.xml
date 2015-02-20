@@ -17,14 +17,14 @@
 
 	<property name="extension.name" value="Diffbot (beta)" />
 	<property name="extension.name.long" value="Diffbot RapidMiner (beta) Extension" />
-	<property name="extension.namespace" value="rmx_diffbot" />
+	<property name="extension.namespace" value="diffbot" />
     <property name="extension.vendor" value="Diffbot Corp." />
     <property name="extension.admin" value="" />
     <property name="extension.url" value="https://github.com/diffbot/diffbot_rapidminer" />
 
 
 	<property name="extension.needsVersion" value="6.1" />
-	<property name="extension.dependencies" value="rmx_text[6.1];rmx_cloud_connectivity[6.1]" />
+	<property name="extension.dependencies" value="rmx_text[6.1]" />
 		
 	<!-- Uncomment if the extension actually depends on other extensions -->
 	<!-- property name="build.dependentExtensions" value="true" /> -->
