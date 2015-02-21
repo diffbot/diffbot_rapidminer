@@ -7,5 +7,7 @@
 	<classpathentry kind="src" path="src_generated"/>
 	<classpathentry kind="lib" path="/RM_61/text_lib/rmx_text-6.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/diffbot-java-1.0-SNAPSHOT.jar" sourcepath="/diffbot-java"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore-4.4.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
