@@ -7,7 +7,7 @@ A Diffbot client for RapidMiner 6.1 or above to analyze web pages. It supports t
 RapidMiner Studio 6.1 with Text Processing. The [Starter](https://rapidminer.com/pricing/) license is sufficient.
 
 ### Getting started
-1. Install the Diffbot extension from the RapidMiner marketplace (or by copying the [plugin](https://github.com/aborg0/diffbot_rapidminer/releases/download/v_0.1.001/rapidminer-Diffbot.beta.-0.1.001.jar) to the `lib/plugins` folder of RapidMiner Studio or RapidMiner Server). It requires the Text Processing (and the included Cloud Connectivity) plugins.
+1. Install the Diffbot extension from the RapidMiner marketplace (or by copying the [plugin](https://github.com/aborg0/diffbot_rapidminer/releases/download/v_0.1.005/rapidminer-Diffbot.beta.-0.1.005.jar) to the `lib/plugins` folder of RapidMiner Studio or RapidMiner Server). It requires the Text Processing (and the included Cloud Connectivity) plugins.
 
 2. Use the [token you got](http://www.diffbot.com/pricing/) from [Diffbot](http://www.diffbot.com/) to analyze web pages using the operators available under `Text Processing/Diffbot`. The results are presented as JSON documents. You might prefer to use the `JSON To Data` operator to extract information in tabular form.
 
@@ -23,4 +23,4 @@ RapidMiner Studio 6.1 with Text Processing. The [Starter](https://rapidminer.com
 5. Start RapidMiner and check whether your extension has been loaded
 
 ##Optional steps
-If you prefer, you can update (the file `lib/diffbot-java-1.0-SNAPSHOT.jar`) the diffbot-java version you want to use. The current version was compiled from https://github.com/aborg0/diffbot-java-client/tree/9c9c184a882595ef2509ca059a917d12a186650c
+If you prefer, you can update (the file `lib/diffbot-java-1.0-SNAPSHOT.jar`) the diffbot-java version you want to use. The current version was compiled from https://github.com/aborg0/diffbot-java-client/releases/tag/vknime0.1
