@@ -26,13 +26,13 @@ import com.rapidminer.operator.ProcessSetupError.Severity;
 import com.rapidminer.operator.ports.InputPort;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.operator.ports.Port;
+import com.rapidminer.operator.ports.metadata.AttributeMetaData;
 import com.rapidminer.operator.ports.metadata.ExampleSetMetaData;
 import com.rapidminer.operator.ports.metadata.ExampleSetPrecondition;
-import com.rapidminer.operator.ports.metadata.MetaDataInfo;
-import com.rapidminer.operator.ports.quickfix.ChangeAttributeRoleQuickFix;
 import com.rapidminer.operator.ports.quickfix.QuickFix;
 import com.rapidminer.operator.text.Document;
 import com.rapidminer.parameter.ParameterType;
+import com.rapidminer.parameter.ParameterTypeAttribute;
 import com.rapidminer.parameter.ParameterTypeBoolean;
 import com.rapidminer.parameter.ParameterTypeInt;
 import com.rapidminer.parameter.ParameterTypeString;
@@ -40,7 +40,6 @@ import com.rapidminer.parameter.PortProvider;
 import com.rapidminer.parameter.UndefinedParameterError;
 import com.rapidminer.parameter.conditions.BooleanParameterCondition;
 import com.rapidminer.parameter.conditions.PortConnectedCondition;
-import com.rapidminer.tools.Ontology;
 import com.rapidminer.tools.config.Configurable;
 import com.rapidminer.tools.config.ConfigurationException;
 import com.rapidminer.tools.config.ConfigurationManager;
@@ -99,7 +98,7 @@ public class DiffbotArticleOperator extends Operator {
 	/**
 	 * 
 	 */
-	private static final String LOCATION_ROLE = "location";
+	private static final String LOCATION = "location";
 	/**
 	 * 
 	 */
@@ -132,18 +131,12 @@ public class DiffbotArticleOperator extends Operator {
 					throws UndefinedParameterError {
 				super.makeAdditionalChecks(emd);
 				if (urlInputPort.isConnected()) {
-					MetaDataInfo containsSpecialAttribute = emd
-							.containsSpecialAttribute(LOCATION_ROLE);
-					if (containsSpecialAttribute == MetaDataInfo.NO) {
+					AttributeMetaData attributeMetaData = emd
+							.getAttributeByName(getParameterAsString(LOCATION));
+					if (!attributeMetaData.isNominal()) {
 						createError(
-								Severity.ERROR,
-								emd.containsAttributesWithValueType(
-										Ontology.NOMINAL, true) != MetaDataInfo.NO ? Collections
-										.singletonList(new ChangeAttributeRoleQuickFix(
-												urlInputPort, LOCATION_ROLE,
-												"location.quickfix"))
-										: Collections.<QuickFix> emptyList(),
-								"location.missing");
+								Severity.ERROR, Collections.<QuickFix> emptyList(),
+								"location.not.nominal");
 					}
 				}
 			}
@@ -219,7 +212,7 @@ public class DiffbotArticleOperator extends Operator {
 				urlInputPort.checkPreconditions();
 				ExampleSet exampleSet = (ExampleSet) anyDataOrNull;
 				Attribute locationAttribute = exampleSet.getAttributes()
-						.getSpecial(LOCATION_ROLE);
+						.get(getParameterAsString(LOCATION));
 				List<Document> documents = new ArrayList<>(exampleSet.size());
 				for (Example example : exampleSet) {
 					String url = example.getNominalValue(locationAttribute);
@@ -262,7 +255,7 @@ public class DiffbotArticleOperator extends Operator {
 	public List<ParameterType> getParameterTypes() {
 		ParameterTypeString token = new ParameterTypeString(TOKEN, "Token",
 				false, false);
-		ParameterTypeString url = new ParameterTypeString(URL, "URL", false,
+		ParameterTypeString url = new ParameterTypeString(URL, "URL", true,
 				false);
 		ParameterTypeBoolean paging = new ParameterTypeBoolean(
 				PAGING,
@@ -294,14 +287,18 @@ public class DiffbotArticleOperator extends Operator {
 						this, CUSTOM_FIELDS, true, true));
 		fields.registerDependencyCondition(new BooleanParameterCondition(this,
 				CUSTOM_FIELDS, true, false));
+		ParameterTypeAttribute location = new ParameterTypeAttribute(LOCATION, "Article locations", urlInputPort, true, false);
+		PortProvider pp = new PortProvider() {
+			@Override
+			public Port getPort() {
+				return urlInputPort;
+			}
+		};
 		url.registerDependencyCondition(new PortConnectedCondition(this,
-				new PortProvider() {
-					@Override
-					public Port getPort() {
-						return urlInputPort;
-					}
-				}, true, false));
-		return Arrays.<ParameterType> asList(token, url, paging, version,
+				pp, true, false));
+		location.registerDependencyCondition(new PortConnectedCondition(this,
+				pp, true, true));
+		return Arrays.<ParameterType> asList(token, url, location, paging, version,
 				timeout, fields, customFields, customFieldsValue, userAgent,
 				referrer, cookie, acceptLanguage);
 	}

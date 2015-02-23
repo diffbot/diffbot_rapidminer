@@ -25,20 +25,19 @@ import com.rapidminer.operator.ProcessSetupError.Severity;
 import com.rapidminer.operator.ports.InputPort;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.operator.ports.Port;
+import com.rapidminer.operator.ports.metadata.AttributeMetaData;
 import com.rapidminer.operator.ports.metadata.ExampleSetMetaData;
 import com.rapidminer.operator.ports.metadata.ExampleSetPrecondition;
-import com.rapidminer.operator.ports.metadata.MetaDataInfo;
-import com.rapidminer.operator.ports.quickfix.ChangeAttributeRoleQuickFix;
 import com.rapidminer.operator.ports.quickfix.QuickFix;
 import com.rapidminer.operator.text.Document;
 import com.rapidminer.parameter.ParameterType;
+import com.rapidminer.parameter.ParameterTypeAttribute;
 import com.rapidminer.parameter.ParameterTypeInt;
 import com.rapidminer.parameter.ParameterTypeString;
 import com.rapidminer.parameter.ParameterTypeStringCategory;
 import com.rapidminer.parameter.PortProvider;
 import com.rapidminer.parameter.UndefinedParameterError;
 import com.rapidminer.parameter.conditions.PortConnectedCondition;
-import com.rapidminer.tools.Ontology;
 
 /**
  * Diffbot article operator.
@@ -85,7 +84,7 @@ public class DiffbotAnalyzeOperator extends Operator {
 	/**
 	 * 
 	 */
-	private static final String LOCATION_ROLE = "location";
+	private static final String LOCATION = "location";
 	/**
 	 * 
 	 */
@@ -101,35 +100,30 @@ public class DiffbotAnalyzeOperator extends Operator {
 	/**
 	 * Creates the diffbot article operator.
 	 * 
-	 * @param description An {@link OperatorDescription}.
+	 * @param description
+	 *            An {@link OperatorDescription}.
 	 */
 	public DiffbotAnalyzeOperator(OperatorDescription description) {
 		super(description);
-		
+
 		ExampleSetPrecondition precondition = new ExampleSetPrecondition(
 				urlInputPort) {
 			/**
-			 * {@inheritDoc}
-			 * Checks whether there is a table connected and if yes, it has an Attribute with "location" role.
-			 * It provides a quickfix in case there was no location.
+			 * {@inheritDoc} Checks whether there is a table connected and if
+			 * yes, it has an Attribute with "location" role. It provides a
+			 * quickfix in case there was no location.
 			 */
 			@Override
 			public void makeAdditionalChecks(ExampleSetMetaData emd)
 					throws UndefinedParameterError {
 				super.makeAdditionalChecks(emd);
 				if (urlInputPort.isConnected()) {
-					MetaDataInfo containsSpecialAttribute = emd
-							.containsSpecialAttribute(LOCATION_ROLE);
-					if (containsSpecialAttribute == MetaDataInfo.NO) {
+					AttributeMetaData attributeMetaData = emd.getAttributeByName(getParameterAsString(LOCATION));
+					if (!attributeMetaData.isNominal()) {
 						createError(
 								Severity.ERROR,
-								emd.containsAttributesWithValueType(
-										Ontology.NOMINAL, true) != MetaDataInfo.NO ? Collections
-										.singletonList(new ChangeAttributeRoleQuickFix(
-												urlInputPort, LOCATION_ROLE,
-												"location.quickfix"))
-										: Collections.<QuickFix> emptyList(),
-								"location.missing");
+								Collections.<QuickFix> emptyList(),
+								"location.not.nominal");
 					}
 				}
 			}
@@ -170,7 +164,7 @@ public class DiffbotAnalyzeOperator extends Operator {
 		}
 		String fields = getParameterAsString(CUSTOM_FIELDS_VALUE);
 		if (!missing(fields)) {
-					arguments.put("fields", fields);
+			arguments.put("fields", fields);
 		}
 		String mode = getParameterAsString(MODE);
 		if (!missing(mode)) {
@@ -184,8 +178,7 @@ public class DiffbotAnalyzeOperator extends Operator {
 			if (anyDataOrNull != null) {
 				urlInputPort.checkPreconditions();
 				ExampleSet exampleSet = (ExampleSet) anyDataOrNull;
-				Attribute locationAttribute = exampleSet.getAttributes()
-						.getSpecial(LOCATION_ROLE);
+				Attribute locationAttribute = exampleSet.getAttributes().get(getParameterAsString(LOCATION));
 				List<Document> documents = new ArrayList<>(exampleSet.size());
 				for (Example example : exampleSet) {
 					String url = example.getNominalValue(locationAttribute);
@@ -228,7 +221,7 @@ public class DiffbotAnalyzeOperator extends Operator {
 	public List<ParameterType> getParameterTypes() {
 		ParameterTypeString token = new ParameterTypeString(TOKEN, "Token",
 				false, false);
-		ParameterTypeString url = new ParameterTypeString(URL, "URL", false,
+		ParameterTypeString url = new ParameterTypeString(URL, "URL", true,
 				false);
 		ParameterTypeInt version = new ParameterTypeInt(VERSION,
 				"Diffbot version", 2, 11, 3, true);
@@ -239,7 +232,10 @@ public class DiffbotAnalyzeOperator extends Operator {
 		ParameterTypeString customFieldsValue = new ParameterTypeString(
 				CUSTOM_FIELDS_VALUE, "Custom 'fields' definition", true, true);
 		ParameterTypeStringCategory mode = new ParameterTypeStringCategory(
-				MODE, "Mode, when set, only the specific automatic API will be used to analyze that specific page type. All other pages will return the default Analyze fields", new String[] {"article", "product", "image", "discussion", "video"}, "", true);
+				MODE,
+				"Mode, when set, only the specific automatic API will be used to analyze that specific page type. All other pages will return the default Analyze fields",
+				new String[] { "article", "product", "image", "discussion",
+						"video" }, "", true);
 		ParameterTypeString userAgent = new ParameterTypeString(USER_AGENT,
 				"User-Agent header used by Diffbot", true, true);
 		ParameterTypeString referrer = new ParameterTypeString(REFERRER,
@@ -249,15 +245,20 @@ public class DiffbotAnalyzeOperator extends Operator {
 		ParameterTypeString acceptLanguage = new ParameterTypeString(
 				ACCEPT_LANGUAGE, "Accept-Language header used by Diffbot",
 				true, true);
-		url.registerDependencyCondition(new PortConnectedCondition(this,
-				new PortProvider() {
-					@Override
-					public Port getPort() {
-						return urlInputPort;
-					}
-				}, true, false));
-		return Arrays.<ParameterType> asList(token, url, version,
-				timeout, customFieldsValue, mode, userAgent,
-				referrer, cookie, acceptLanguage);
+		ParameterTypeAttribute location = new ParameterTypeAttribute(
+				LOCATION, "Web page locations", urlInputPort, true, false);
+		final PortProvider pp = new PortProvider() {
+			@Override
+			public Port getPort() {
+				return urlInputPort;
+			}
+		};
+		url.registerDependencyCondition(new PortConnectedCondition(this, pp,
+				true, false));
+		location.registerDependencyCondition(new PortConnectedCondition(this,
+				pp, true, true));
+		return Arrays.<ParameterType> asList(token, url, location, version,
+				timeout, customFieldsValue, mode, userAgent, referrer, cookie,
+				acceptLanguage);
 	}
 }
